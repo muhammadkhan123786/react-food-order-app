@@ -1,21 +1,26 @@
 import { useContext } from 'react';
 import Modal from '../UI/Modal';
 
-import UserProgressContext from '../Context/UserProgressContext';
 import { currencyFormatter, calculateTotalPrice } from '../utils/formatting.js';
 import Input from '../UI/Input.jsx';
 import Button from '../UI/Button.jsx';
 import APIsContext from '../Context/APIContext.jsx';
-import CartContext from '../Context/CartContext.jsx';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { hide_CHECKOUT } from '../store/showCart/showCartActions.js';
 
 export default function Checkout() {
-  const { userProgress, hideCheckout } = useContext(UserProgressContext);
-  const { items } = useContext(CartContext);
+  const userProgress = useSelector(
+    (state) => state.showCartReducers.userProgress
+  );
+  const items = useSelector((state) => state.cartItemReducers.items);
+  const dispatch = useDispatch();
+
   const { addOrder } = useContext(APIsContext);
   const totalPrice = calculateTotalPrice();
 
   function handleCloseCheckout() {
-    hideCheckout();
+    dispatch(hide_CHECKOUT());
   }
   let actions = (
     <>

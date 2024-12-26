@@ -1,12 +1,13 @@
 import config from './Config';
 import { currencyFormatter } from '../utils/formatting';
 import Button from '../UI/Button';
-import { useContext } from 'react';
-import CartContext from '../Context/CartContext';
+import { useDispatch } from 'react-redux';
+import { add_Item } from '../store/cartItems/cartItemsActions';
 export default function Meal({ meal }) {
-  const { items, addItem } = useContext(CartContext);
+  const dispatch = useDispatch();
+
   function handleAddItemFn() {
-    addItem(meal);
+    dispatch(add_Item(meal));
   }
   return (
     <div className="meal-item">

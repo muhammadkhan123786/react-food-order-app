@@ -1,15 +1,15 @@
-import { useContext } from 'react';
+import { add_Item, remove_Item } from '../store/cartItems/cartItemsActions';
 import { currencyFormatter } from '../utils/formatting';
-import CartContext from '../Context/CartContext';
+import { useDispatch } from 'react-redux';
 
 export default function CartItem({ item }) {
-  const { addItem, removeItem } = useContext(CartContext);
+  const dispatch = useDispatch();
 
   function handleAddItem() {
-    addItem(item);
+    dispatch(add_Item(item));
   }
   function handleRemoveItem() {
-    removeItem(item.id);
+    dispatch(remove_Item(item.id));
   }
   return (
     <>

@@ -6,7 +6,7 @@ export const currencyFormatter = new Intl.NumberFormat('en-US', {
 });
 
 export function calculateTotalPrice() {
-  const items = useSelector((state) => state.cartReducers.items);
+  const items = useSelector((state) => state.cartItemReducers.items);
   const totalPrice = items.reduce((totalPrice, item) => {
     return totalPrice + item.quantity * item.price;
   }, 0);
