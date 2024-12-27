@@ -16,7 +16,7 @@ export default function Cart() {
   const totalPrice = calculateTotalPrice();
 
   function handleCloseClick() {
-    dispatch(hide_CART);
+    dispatch(hide_CART());
   }
   function handlCheckoutClick() {
     dispatch(show_CHECKOUT());

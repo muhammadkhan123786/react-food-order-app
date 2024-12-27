@@ -1,6 +1,8 @@
 import { createContext } from 'react';
 import config from '../components/Config';
 import useHttp from '../hooks/useHttp';
+import { useDispatch } from 'react-redux';
+import { remove_all_items } from '../store/cartItems/cartItemsActions';
 const order_url = `${config.baseUrl}/orders`;
 const get_meals_url = `${config.baseUrl}/meals`;
 
@@ -14,6 +16,7 @@ const APIsContext = createContext({
 });
 
 export function APIContext({ children }) {
+  const dispatch = useDispatch();
   //add order hook
   const {
     loading: isSending,
@@ -29,15 +32,20 @@ export function APIContext({ children }) {
     data: isFetchingMealsData,
   } = useHttp(get_meals_url, { method: 'GET' }, []);
 
-  function addOrderData(customer, items) {
+  async function addOrderData(customer, items) {
     //send a request backend to add the order.
+
     const orderData = {
       order: {
         items: items,
         customer: customer,
       },
     };
-    sendRequest(orderData);
+    await sendRequest(orderData);
+    if (!isSendingReqError) {
+      dispatch(remove_all_items());
+    }
+
     return {
       loading: isSending,
       error: isSendingReqError,

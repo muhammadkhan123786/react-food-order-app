@@ -1,4 +1,4 @@
-import { addItem, removeItem } from './cartItemsActions';
+import { addItem, removeItem, removeAllItems } from './cartItemsActions';
 
 const initialState = { items: [] };
 
@@ -36,6 +36,9 @@ const cartItemReducerFn = (state = initialState, action) => {
     } else {
       return state;
     }
+    return { ...state, items: updatedItems };
+  } else if (action.type === removeAllItems) {
+    updatedItems = [];
     return { ...state, items: updatedItems };
   }
   return state;

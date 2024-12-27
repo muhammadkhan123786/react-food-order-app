@@ -22,14 +22,15 @@ export default function useHttp(url, config, intialData) {
   const memoizedConfig = useMemo(() => {
     return config;
   }, [JSON.stringify(config)]);
-  
+
   const sendRequest = useCallback(
     async function sendRequest(data) {
+      console.log(data);
       setLoading(true);
       try {
         const resData = await sendHttpRequest(url, {
           ...memoizedConfig,
-          body: data,
+          body: JSON.stringify(data),
         });
         setData(resData);
       } catch (error) {
